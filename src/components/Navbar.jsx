@@ -67,7 +67,7 @@ export const Navbar = () => {
             </a>
           ))}
           <a
-            href="https://github.com/machadop1407"
+            href="https://github.com/Yash913212"
             target="_blank"
             rel="noopener noreferrer"
             className="p-1.5 rounded-md hover:bg-secondary transition-colors"
@@ -80,7 +80,7 @@ export const Navbar = () => {
         {/* mobile nav trigger */}
         <div className="flex items-center gap-4 md:hidden">
           <a
-            href="https://github.com/machadop1407"
+            href="https://github.com/Yash913212"
             target="_blank"
             rel="noopener noreferrer"
             className="p-1.5 rounded-md hover:bg-secondary transition-colors"

@@ -23,7 +23,7 @@ const projects = [
     image: "/projects/project2.png",
     tags: ["React", "TypeScript", "D3.js", "TailwindCSS"],
     demoUrl: "#",
-    githubUrl: "https://github.com/sanjaysahoo21/Oryx",
+    githubUrl: "https://github.com/Yash913212/Oryx",
     metrics: {
       load: "1.2 GB/s streams",
       sla: "99.95%",
@@ -213,7 +213,7 @@ export const ProjectsSection = () => {
             className="cosmic-button w-fit flex items-center mx-auto gap-2 text-sm"
             target="_blank"
             rel="noopener noreferrer"
-            href="https://github.com/machadop1407"
+            href="https://github.com/Yash913212"
           >
             Explore Complete Stack <Github size={16} />
           </a>
