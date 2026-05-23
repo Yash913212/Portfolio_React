@@ -3,11 +3,13 @@ import { Menu, X, Github } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const navItems = [
-  { name: "Home", href: "#hero" },
-  { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
-  { name: "Contact", href: "#contact" },
+  { name: "Home", href: "/#hero" },
+  { name: "About", href: "/#about" },
+  { name: "Skills", href: "/#skills" },
+  { name: "Projects", href: "/#projects" },
+  { name: "Contact", href: "/#contact" },
+  { name: "Systems HUD", href: "/architecture" },
+  { name: "Changelog", href: "/changelog" },
 ];
 
 export const Navbar = () => {
@@ -48,7 +50,7 @@ export const Navbar = () => {
             <path d="M37.5 0L75 65H0L37.5 0Z" />
           </svg>
           <span className="font-semibold tracking-wide uppercase text-sm">
-            Yaswanth
+            Portfolio
           </span>
         </a>
 

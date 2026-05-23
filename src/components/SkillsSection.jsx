@@ -4,14 +4,15 @@ import { Terminal, Cpu, PenTool, Database } from "lucide-react";
 
 const skills = [
   // Frontend
-  { name: "HTML/CSS", level: 95, category: "frontend", stats: { scale: 95, efficiency: 90, robustness: 92 } },
-  { name: "JavaScript", level: 90, category: "frontend", stats: { scale: 92, efficiency: 88, robustness: 90 } },
-  { name: "React / Next.js", level: 90, category: "frontend", stats: { scale: 94, efficiency: 86, robustness: 90 } },
-  { name: "Tailwind CSS", level: 95, category: "frontend", stats: { scale: 98, efficiency: 92, robustness: 88 } },
+  { name: "HTML/CSS", level: 85, category: "frontend", stats: { scale: 75, efficiency: 70, robustness: 72 } },
+  { name: "JavaScript", level: 70, category: "frontend", stats: { scale: 72, efficiency: 68, robustness: 70 } },
+  { name: "React / Next.js", level: 70, category: "frontend", stats: { scale: 74, efficiency: 66, robustness: 70 } },
+  { name: "React Native", level: 62, category: "frontend", stats: { scale: 70, efficiency: 74, robustness: 72 } },
+  { name: "Tailwind CSS", level: 75, category: "frontend", stats: { scale: 78, efficiency: 72, robustness: 68 } },
 
   // Backend
-  { name: "Node.js", level: 80, category: "backend", stats: { scale: 88, efficiency: 80, robustness: 84 } },
-  { name: "Express", level: 75, category: "backend", stats: { scale: 85, efficiency: 82, robustness: 78 } },
+  { name: "Node.js", level: 70, category: "backend", stats: { scale: 78, efficiency: 70, robustness: 74 } },
+  { name: "Express", level: 65, category: "backend", stats: { scale: 75, efficiency: 72, robustness: 68 } },
   { name: "MongoDB", level: 70, category: "backend", stats: { scale: 82, efficiency: 75, robustness: 80 } },
 
   // Tools
@@ -45,7 +46,7 @@ export const SkillsSection = () => {
   return (
     <section id="skills" className="py-28 px-4 relative overflow-hidden bg-secondary/10 border-y border-border/40">
       <div className="container mx-auto max-w-5xl relative z-10">
-        
+
         {/* Asymmetrical title layout */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-16 text-left">
           <div className="space-y-4">
@@ -89,7 +90,7 @@ export const SkillsSection = () => {
               style={{ animationDelay: `${key * 0.05}s` }}
             >
               <div className="absolute top-0 right-0 w-24 h-24 bg-foreground/2.5 rounded-bl-full pointer-events-none group-hover:scale-110 transition-transform" />
-              
+
               {/* Header: Competency name & Icon */}
               <div className="flex items-center justify-between border-b border-border/60 pb-4 mb-4">
                 <div className="flex items-center gap-3">
@@ -112,7 +113,7 @@ export const SkillsSection = () => {
 
               {/* Advanced Technical Odometer Metrics */}
               <div className="space-y-3 font-mono text-[10px] tracking-tight">
-                
+
                 {/* Metric 1: Scale Factor */}
                 <div className="space-y-1">
                   <div className="flex justify-between items-center text-muted-foreground">
