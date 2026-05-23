@@ -7,7 +7,7 @@ const projects = [
     title: "Multi-tenant SaaS Platform",
     description: "A comprehensive multi-tenant SaaS platform featuring tenant isolation, secure role-based access control, and scalable system architecture.",
     image: "/projects/project1.png",
-    tags: ["React / Next.js", "Node.js", "MongoDB", "Auth0"],
+    tags: ["React.js", "Node.js", "MongoDB", "Auth0"],
     demoUrl: "#",
     githubUrl: "https://github.com/Yash913212/Multi-tenant-saas",
     metrics: {

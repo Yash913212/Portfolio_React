@@ -85,7 +85,7 @@ export const AboutSection = () => {
                     </span>
                   </div>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    Building robust, scalable applications with React, Next.js, Node, and state-of-the-art tooling.
+                    Building robust, scalable applications with React.js, Node.js, and state-of-the-art tooling.
                   </p>
                   <div className="flex items-center gap-1.5 text-xs text-primary font-bold opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-[-10px] group-hover:translate-x-0 pt-2 cursor-pointer">
                     Inspect Stack Architecture <ChevronRight className="h-3 w-3" />

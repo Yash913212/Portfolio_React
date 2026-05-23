@@ -1,7 +1,7 @@
 export const StarBackground = () => {
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 bg-background transition-colors duration-500">
-      {/* Dynamic Next.js Coordinate Grid */}
+      {/* Dynamic Coordinate Grid */}
       <div className="absolute inset-0 grid-lines grid-masked opacity-[0.3] dark:opacity-[0.5]" />
       
       {/* Premium Vercel Radial Glow Blobs */}
