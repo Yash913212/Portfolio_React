@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Menu, X, Github } from "lucide-react";
+import { Menu, X, Github, Code2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const navItems = [
@@ -34,21 +34,16 @@ export const Navbar = () => {
       )}
     >
       <div className="container flex items-center justify-between">
-        {/* Vercel Geometric style Logo */}
+        {/* Senior Developer Logo Brand */}
         <a
-          className="text-lg font-bold tracking-tight text-foreground flex items-center gap-2 group"
+          className="text-sm font-mono font-bold tracking-tight text-foreground flex items-center gap-2.5 group"
           href="#hero"
         >
-          <svg
-            className="w-5 h-5 fill-current transition-transform duration-300 group-hover:scale-110"
-            viewBox="0 0 75 65"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M37.5 0L75 65H0L37.5 0Z" />
-          </svg>
-          <span className="font-semibold tracking-wide uppercase text-sm">
-            Portfolio
+          <div className="p-1 bg-primary/10 border border-primary/20 rounded-md">
+            <Code2 className="w-4 h-4 text-primary transition-transform duration-300 group-hover:scale-110" />
+          </div>
+          <span className="tracking-widest uppercase text-xs font-black">
+            Yaswanth Amjuri <span className="text-primary/80 font-mono font-normal">// DEV</span>
           </span>
         </a>
 
