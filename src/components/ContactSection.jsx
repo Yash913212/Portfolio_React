@@ -133,16 +133,16 @@ export const ContactSection = () => {
     >
       <div className="container mx-auto max-w-5xl relative z-10">
         
-        {/* Asymmetrical headers */}
-        <div className="text-left space-y-4 mb-16">
-          <span className="text-[10px] font-mono tracking-widest text-primary uppercase font-bold flex items-center gap-1.5">
+        {/* Centered headers */}
+        <div className="text-center flex flex-col items-center justify-center space-y-4 mb-16">
+          <span className="text-[10px] font-mono tracking-widest text-primary uppercase font-bold flex items-center justify-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
             COMMUNICATION_CHANNELS // COMMAND_PING
           </span>
-          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tighter leading-none">
+          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tighter leading-none text-center">
             Get In <span className="text-shimmer font-black">Touch</span>
           </h2>
-          <p className="text-muted-foreground max-w-xl text-sm sm:text-base leading-relaxed">
+          <p className="text-muted-foreground max-w-xl text-sm sm:text-base leading-relaxed text-center mx-auto">
             Let's collaborate on building the future of the web. Reach out directly or send an instant message.
           </p>
         </div>
@@ -182,13 +182,13 @@ export const ContactSection = () => {
             </div>
 
             {/* Direct Core Telemetry Specs (Phone/Mail/Loc/Github/Linkedin) */}
-            <div className="grid grid-cols-1 gap-4 font-mono text-[10px] border border-border/85 rounded-md p-5 bg-secondary/15">
+            <div className="grid grid-cols-1 gap-4 font-mono text-[10px] border border-border/85 rounded-md p-5 bg-secondary/15 w-full">
               
-              <div className="flex items-center gap-3.5 group">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3.5 group">
                 <div className="p-2.5 rounded bg-background border border-border/80 text-muted-foreground group-hover:text-primary transition-colors">
                   <Mail className="h-4 w-4" />
                 </div>
-                <div className="text-left">
+                <div className="flex flex-col items-center sm:items-start">
                   <span className="text-[9px] text-muted-foreground uppercase block font-bold">EMAIL_TARGET</span>
                   <a href="mailto:yaswanthamjuri@gmail.com" className="text-foreground hover:text-primary transition-colors font-bold text-xs">
                     yaswanthamjuri@gmail.com
@@ -196,11 +196,11 @@ export const ContactSection = () => {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3.5 group">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3.5 group">
                 <div className="p-2.5 rounded bg-background border border-border/80 text-muted-foreground group-hover:text-primary transition-colors">
                   <Phone className="h-4 w-4" />
                 </div>
-                <div className="text-left">
+                <div className="flex flex-col items-center sm:items-start">
                   <span className="text-[9px] text-muted-foreground uppercase block font-bold">NODE_TEL</span>
                   <a href="tel:+918688209206" className="text-foreground hover:text-primary transition-colors font-bold text-xs">
                     +91 8688209206
@@ -208,11 +208,11 @@ export const ContactSection = () => {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3.5 group">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3.5 group">
                 <div className="p-2.5 rounded bg-background border border-border/80 text-muted-foreground group-hover:text-primary transition-colors">
                   <Github className="h-4 w-4" />
                 </div>
-                <div className="text-left">
+                <div className="flex flex-col items-center sm:items-start">
                   <span className="text-[9px] text-muted-foreground uppercase block font-bold">GITHUB_NODE</span>
                   <a href="https://github.com/Yash913212" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors font-bold text-xs">
                     github.com/Yash913212
@@ -220,11 +220,11 @@ export const ContactSection = () => {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3.5 group">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3.5 group">
                 <div className="p-2.5 rounded bg-background border border-border/80 text-muted-foreground group-hover:text-primary transition-colors">
                   <Linkedin className="h-4 w-4" />
                 </div>
-                <div className="text-left">
+                <div className="flex flex-col items-center sm:items-start">
                   <span className="text-[9px] text-muted-foreground uppercase block font-bold">LINKEDIN_NODE</span>
                   <a href="https://linkedin.com/in/yaswanth-amjuri" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors font-bold text-xs">
                     linkedin.com/in/yaswanth-amjuri
@@ -232,13 +232,13 @@ export const ContactSection = () => {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3.5 group">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3.5 group">
                 <div className="p-2.5 rounded bg-background border border-border/80 text-muted-foreground group-hover:text-primary transition-colors">
                   <MapPin className="h-4 w-4" />
                 </div>
-                <div className="text-left">
+                <div className="flex flex-col items-center sm:items-start">
                   <span className="text-[9px] text-muted-foreground uppercase block font-bold">LOCATION_COORD</span>
-                  <span className="text-foreground font-bold text-xs">
+                  <span className="text-foreground font-bold text-xs text-center sm:text-left">
                     Andhra Pradesh, India
                   </span>
                 </div>
@@ -331,6 +331,6 @@ export const ContactSection = () => {
 
       {/* Decorative radial blur background */}
       <div className="absolute bottom-[-15%] right-[-10%] w-[350px] h-[350px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
-    </section>
+    </motion.section>
   );
 };

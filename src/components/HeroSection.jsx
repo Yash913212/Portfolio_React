@@ -50,17 +50,17 @@ export const HeroSection = () => {
       className="relative min-h-screen flex items-center justify-center px-4 pt-20 pb-16 overflow-hidden border-b border-border/40"
     >
       <div className="container max-w-5xl mx-auto z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center text-left">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center text-center">
           
           {/* Narrative HUD Column */}
-          <div className="lg:col-span-7 space-y-6 sm:space-y-8 flex flex-col items-start">
+          <div className="lg:col-span-7 space-y-6 sm:space-y-8 flex flex-col items-center justify-center">
             {/* Telemetry Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-emerald-500/20 bg-emerald-500/5 text-[10px] font-mono font-bold text-emerald-500 tracking-wider uppercase opacity-0 animate-fade-in">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
               <span>ORBITAL TELEMETRY SYSTEM ACTIVE</span>
             </div>
-
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tighter leading-none max-w-xl">
+ 
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tighter leading-none max-w-xl mx-auto">
               <span className="block text-muted-foreground opacity-0 animate-fade-in text-2xl sm:text-3xl font-semibold tracking-wide uppercase">
                 SYSTEM INTERFACE
               </span>
@@ -68,12 +68,12 @@ export const HeroSection = () => {
                 Yaswanth Amjuri
               </span>
             </h1>
-
-            <p className="text-sm sm:text-base text-muted-foreground max-w-lg leading-relaxed opacity-0 animate-fade-in-delay-2">
+ 
+            <p className="text-sm sm:text-base text-muted-foreground max-w-lg leading-relaxed opacity-0 animate-fade-in-delay-2 mx-auto">
               A responsive human-agent digital workspace mapping advanced client-server frameworks, creative interface mechanics, and premium micro-interactions.
             </p>
-
-            <div className="flex flex-wrap gap-4 pt-2 opacity-0 animate-fade-in-delay-3">
+ 
+            <div className="flex flex-wrap justify-center gap-4 pt-2 opacity-0 animate-fade-in-delay-3">
               <a href="#projects" className="cosmic-button text-xs sm:text-sm">
                 Initiate Systems
               </a>
@@ -81,10 +81,10 @@ export const HeroSection = () => {
                 Ping Core Agent
               </a>
             </div>
-
+ 
             {/* Odometer HUD statistics rows */}
             <div className="grid grid-cols-3 gap-4 sm:gap-6 border-t border-border/80 pt-6 w-full opacity-0 animate-fade-in-delay-4">
-              <div className="space-y-1 text-left">
+              <div className="space-y-1 text-center">
                 <div className="text-[10px] font-mono tracking-widest text-muted-foreground uppercase">
                   Telemetry commits
                 </div>
@@ -92,8 +92,8 @@ export const HeroSection = () => {
                   {telemetryActive ? <TelemetryCounter endValue="48290" suffix="+" /> : "0"}
                 </div>
               </div>
-
-              <div className="space-y-1 text-left">
+ 
+              <div className="space-y-1 text-center">
                 <div className="text-[10px] font-mono tracking-widest text-muted-foreground uppercase">
                   Tech Chronology
                 </div>
@@ -101,8 +101,8 @@ export const HeroSection = () => {
                   {telemetryActive ? <TelemetryCounter endValue="2026" duration={1200} /> : "2018"}
                 </div>
               </div>
-
-              <div className="space-y-1 text-left">
+ 
+              <div className="space-y-1 text-center">
                 <div className="text-[10px] font-mono tracking-widest text-muted-foreground uppercase">
                   Modules Shipped
                 </div>

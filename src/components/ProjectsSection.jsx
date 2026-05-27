@@ -1,14 +1,15 @@
 import { ArrowRight, ExternalLink, Github, Layers, ShieldCheck, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
 const projects = [
   {
     id: 1,
     title: "Multi-tenant SaaS Platform",
     description: "A comprehensive multi-tenant SaaS platform featuring tenant isolation, secure role-based access control, and scalable system architecture.",
-    image: "/projects/project1.png",
+    image: "/projects/project1.webp",
     tags: ["React.js", "Node.js", "MongoDB", "Auth0"],
-    demoUrl: "#",
+    demoUrl: "https://github.com/Yash913212/Multi-tenant-saas",
     githubUrl: "https://github.com/Yash913212/Multi-tenant-saas",
     metrics: {
       load: "50,000 req/sec",
@@ -20,9 +21,9 @@ const projects = [
     id: 2,
     title: "Oryx Data Analytics Dashboard",
     description: "A high-performance real-time data processing and analytics tool equipped with interactive dashboards and advanced D3 visualizations.",
-    image: "/projects/project2.png",
+    image: "/projects/project2.webp",
     tags: ["React", "TypeScript", "D3.js", "TailwindCSS"],
-    demoUrl: "#",
+    demoUrl: "https://github.com/Yash913212/Oryx",
     githubUrl: "https://github.com/Yash913212/Oryx",
     metrics: {
       load: "1.2 GB/s streams",
@@ -34,9 +35,9 @@ const projects = [
     id: 3,
     title: "Async Payment Gateway",
     description: "A robust, PCI-compliant asynchronous payment gateway offering webhook streams, secure tokens, and detailed transaction logs.",
-    image: "/projects/project3.png",
+    image: "/projects/project3.webp",
     tags: ["Node.js", "Express", "Stripe API", "Redis"],
-    demoUrl: "#",
+    demoUrl: "https://github.com/Yash913212/Async-payment-gateway",
     githubUrl: "https://github.com/Yash913212/Async-payment-gateway",
     metrics: {
       load: "Redis BullMQ Queue",
@@ -48,7 +49,7 @@ const projects = [
     id: 4,
     title: "VitaNova Auth & Onboarding Core",
     description: "A secure multi-account authentication, onboarding, and profile orchestration engine built with post-login setup redirection, robust theme synchronizations, and sleek micro-animations.",
-    image: "/projects/project4.png",
+    image: "/projects/project4.webp",
     tags: ["React", "Supabase Auth", "Zustand", "TailwindCSS"],
     demoUrl: "https://vitanova-one.vercel.app/login",
     githubUrl: "https://github.com/Yash913212/Vitanova",
@@ -61,20 +62,25 @@ const projects = [
 ];
 
 export const ProjectsSection = () => {
+  const [sectionRef, isVisible] = useIntersectionObserver({ threshold: 0.05 });
+
   return (
-    <section id="projects" className="py-28 px-4 relative overflow-hidden border-b border-border/40">
+    <section ref={sectionRef} id="projects" className="py-28 px-4 relative overflow-hidden border-b border-border/40">
       <div className="container mx-auto max-w-5xl relative z-10">
         
         {/* Section Header */}
-        <div className="text-left space-y-4 mb-20">
-          <span className="text-[10px] font-mono tracking-widest text-primary uppercase font-bold flex items-center gap-1.5">
+        <div className={cn(
+          "text-center flex flex-col items-center justify-center space-y-4 mb-20 transition-all duration-1000 transform opacity-0 translate-y-8",
+          isVisible && "opacity-100 translate-y-0"
+        )}>
+          <span className="text-[10px] font-mono tracking-widest text-primary uppercase font-bold flex items-center justify-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
             SYSTEM_INTEGRATIONS // CASE_STUDIES
           </span>
-          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tighter leading-none">
+          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tighter leading-none text-center">
             Featured <span className="text-shimmer font-black">Architectures</span>
           </h2>
-          <p className="text-muted-foreground max-w-xl text-sm sm:text-base leading-relaxed">
+          <p className="text-muted-foreground max-w-xl text-sm sm:text-base leading-relaxed text-center mx-auto">
             A showcase of production-ready distributed architectures mapped across real-world scaling, security bounds, and transaction safety.
           </p>
         </div>
@@ -86,8 +92,11 @@ export const ProjectsSection = () => {
             return (
               <div
                 key={project.id}
-                className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch opacity-0 animate-scale-pop"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className={cn(
+                  "grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch opacity-0 transition-all duration-700",
+                  isVisible && "animate-scale-pop"
+                )}
+                style={{ animationDelay: isVisible ? `${index * 0.15}s` : "0s" }}
               >
                 
                 {/* Image Showcase Container Column (Col-Span 7) */}
@@ -141,13 +150,13 @@ export const ProjectsSection = () => {
                 {/* Case Study Details Column (Col-Span 5) */}
                 <div
                   className={cn(
-                    "lg:col-span-5 flex flex-col justify-between p-6 sm:p-8 rounded-md border border-border/80 bg-secondary/10 text-left",
+                    "lg:col-span-5 flex flex-col justify-between items-center p-6 sm:p-8 rounded-md border border-border/80 bg-secondary/10 text-center w-full",
                     isEven ? "lg:order-2" : "lg:order-1"
                   )}
                 >
-                  <div className="space-y-6">
-                    <div className="space-y-2">
-                      <div className="flex flex-wrap gap-1.5">
+                  <div className="space-y-6 w-full flex flex-col items-center">
+                    <div className="space-y-2 flex flex-col items-center">
+                      <div className="flex flex-wrap gap-1.5 justify-center">
                         {project.tags.map((tag, i) => (
                           <span
                             key={i}
@@ -157,48 +166,48 @@ export const ProjectsSection = () => {
                           </span>
                         ))}
                       </div>
-                      <h3 className="text-2xl font-bold tracking-tight text-foreground pt-2">
+                      <h3 className="text-2xl font-bold tracking-tight text-foreground pt-2 text-center">
                         {project.title}
                       </h3>
                     </div>
 
-                    <p className="text-sm text-muted-foreground leading-relaxed">
+                    <p className="text-sm text-muted-foreground leading-relaxed text-center">
                       {project.description}
                     </p>
 
                     {/* Hardened System Metrics Specification Table */}
-                    <div className="border border-border/80 rounded-sm bg-background/50 p-4 font-mono text-[10px] space-y-2.5">
-                      <div className="text-[9px] text-muted-foreground uppercase tracking-widest border-b border-border/80 pb-1.5 font-bold flex items-center gap-1.5">
+                    <div className="border border-border/80 rounded-sm bg-background/50 p-4 font-mono text-[10px] space-y-2.5 w-full">
+                      <div className="text-[9px] text-muted-foreground uppercase tracking-widest border-b border-border/80 pb-1.5 font-bold flex items-center justify-center gap-1.5 w-full">
                         <Layers size={10} className="text-primary" />
                         Architectural Specs
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex justify-between w-full">
                         <span className="text-muted-foreground uppercase">LOAD CAPACITY:</span>
                         <span className="font-bold text-foreground flex items-center gap-1">
                           <Zap size={10} className="text-amber-500 animate-pulse" />
                           {project.metrics.load}
                         </span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex justify-between w-full">
                         <span className="text-muted-foreground uppercase">SYSTEM SLA:</span>
                         <span className="font-bold text-emerald-500 flex items-center gap-1">
                           <ShieldCheck size={10} />
                           {project.metrics.sla}
                         </span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex justify-between w-full">
                         <span className="text-muted-foreground uppercase">CORE ENGINE:</span>
                         <span className="font-bold text-foreground">{project.metrics.database}</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="pt-6 flex items-center justify-between border-t border-border/60 mt-6">
+                  <div className="pt-6 flex items-center justify-center border-t border-border/60 mt-6 w-full">
                     <a
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
+                      className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 mx-auto"
                     >
                       Browse Repo Source <ArrowRight size={10} />
                     </a>

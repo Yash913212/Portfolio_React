@@ -2,6 +2,7 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Terminal, Cpu, PenTool, Database } from "lucide-react";
 import { motion } from "framer-motion";
+import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
 const skills = [
   // Frontend
@@ -39,6 +40,7 @@ const getCategoryIcon = (category) => {
 
 export const SkillsSection = () => {
   const [activeCategory, setActiveCategory] = useState("all");
+  const [sectionRef, isVisible] = useIntersectionObserver({ threshold: 0.05 });
 
   const filteredSkills = skills.filter(
     (skill) => activeCategory === "all" || skill.category === activeCategory
@@ -46,6 +48,7 @@ export const SkillsSection = () => {
 
   return (
     <motion.section
+      ref={sectionRef}
       id="skills"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -55,23 +58,23 @@ export const SkillsSection = () => {
     >
       <div className="container mx-auto max-w-5xl relative z-10">
 
-        {/* Asymmetrical title layout */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-16 text-left">
-          <div className="space-y-4">
-            <span className="text-[10px] font-mono tracking-widest text-primary uppercase font-bold flex items-center gap-1.5">
+        {/* Centered title layout */}
+        <div className="flex flex-col items-center gap-6 mb-16 text-center">
+          <div className="space-y-4 max-w-xl mx-auto flex flex-col items-center">
+            <span className="text-[10px] font-mono tracking-widest text-primary uppercase font-bold flex items-center gap-1.5 justify-center">
               <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
               SYSTEM_BLUEPRINTS // STACK
             </span>
-            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tighter leading-none">
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tighter leading-none text-center">
               Systems & <span className="text-shimmer font-black">Competencies</span>
             </h2>
-            <p className="text-muted-foreground max-w-md text-sm sm:text-base leading-relaxed">
+            <p className="text-muted-foreground text-sm sm:text-base leading-relaxed text-center mx-auto max-w-md">
               A comprehensive view of active engineering layers, performance bounds, and resource efficiencies.
             </p>
           </div>
 
           {/* Categories Tab selectors */}
-          <div className="flex flex-wrap gap-1.5 border border-border/80 bg-background/50 backdrop-blur-md p-1 rounded-md">
+          <div className="flex flex-wrap gap-1.5 border border-border/80 bg-background/50 backdrop-blur-md p-1 rounded-md justify-center">
             {categories.map((category, key) => (
               <button
                 key={key}
@@ -94,18 +97,21 @@ export const SkillsSection = () => {
           {filteredSkills.map((skill, key) => (
             <div
               key={key}
-              className="glass-card p-6 sm:p-8 rounded-md border border-border/85 hover:border-primary/40 transition-all duration-300 flex flex-col justify-between opacity-0 animate-fade-in group text-left relative overflow-hidden"
-              style={{ animationDelay: `${key * 0.05}s` }}
+              className={cn(
+                "glass-card p-6 sm:p-8 rounded-md border border-border/85 hover:border-primary/40 transition-all duration-300 flex flex-col justify-between opacity-0 group text-center relative overflow-hidden",
+                isVisible && "animate-fade-in"
+              )}
+              style={{ animationDelay: isVisible ? `${key * 0.05}s` : "0s" }}
             >
               <div className="absolute top-0 right-0 w-24 h-24 bg-foreground/2.5 rounded-bl-full pointer-events-none group-hover:scale-110 transition-transform" />
 
               {/* Header: Competency name & Icon */}
-              <div className="flex items-center justify-between border-b border-border/60 pb-4 mb-4">
-                <div className="flex items-center gap-3">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-border/60 pb-4 mb-4 text-center sm:text-left">
+                <div className="flex flex-col sm:flex-row items-center gap-3">
                   <div className="p-2.5 rounded bg-secondary border border-border/80 text-muted-foreground group-hover:text-primary transition-colors">
                     {getCategoryIcon(skill.category)}
                   </div>
-                  <div>
+                  <div className="flex flex-col items-center sm:items-start">
                     <h3 className="font-bold text-lg tracking-tight text-foreground">
                       {skill.name}
                     </h3>
