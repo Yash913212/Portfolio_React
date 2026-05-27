@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Terminal, Cpu, PenTool, Database } from "lucide-react";
+import { motion } from "framer-motion";
 
 const skills = [
   // Frontend
@@ -44,7 +45,14 @@ export const SkillsSection = () => {
   );
 
   return (
-    <section id="skills" className="py-28 px-4 relative overflow-hidden bg-secondary/10 border-y border-border/40">
+    <motion.section
+      id="skills"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="py-28 px-4 relative overflow-hidden bg-secondary/10 border-y border-border/40"
+    >
       <div className="container mx-auto max-w-5xl relative z-10">
 
         {/* Asymmetrical title layout */}
@@ -122,8 +130,8 @@ export const SkillsSection = () => {
                   </div>
                   <div className="flex gap-0.5 w-full bg-secondary h-1 rounded overflow-hidden">
                     <div
-                      className="bg-foreground/80 group-hover:bg-primary h-full transition-all duration-1000 ease-out"
-                      style={{ width: skill.stats.scale + "%" }}
+                      className="bg-foreground/80 group-hover:bg-primary h-full transition-[transform,background-color] duration-1000 ease-out origin-left w-full"
+                      style={{ transform: `scaleX(${skill.stats.scale / 100})` }}
                     />
                   </div>
                 </div>
@@ -136,8 +144,8 @@ export const SkillsSection = () => {
                   </div>
                   <div className="flex gap-0.5 w-full bg-secondary h-1 rounded overflow-hidden">
                     <div
-                      className="bg-foreground/80 group-hover:bg-primary h-full transition-all duration-1000 ease-out"
-                      style={{ width: skill.stats.efficiency + "%" }}
+                      className="bg-foreground/80 group-hover:bg-primary h-full transition-[transform,background-color] duration-1000 ease-out origin-left w-full"
+                      style={{ transform: `scaleX(${skill.stats.efficiency / 100})` }}
                     />
                   </div>
                 </div>
@@ -150,8 +158,8 @@ export const SkillsSection = () => {
                   </div>
                   <div className="flex gap-0.5 w-full bg-secondary h-1 rounded overflow-hidden">
                     <div
-                      className="bg-foreground/80 group-hover:bg-primary h-full transition-all duration-1000 ease-out"
-                      style={{ width: skill.stats.robustness + "%" }}
+                      className="bg-foreground/80 group-hover:bg-primary h-full transition-[transform,background-color] duration-1000 ease-out origin-left w-full"
+                      style={{ transform: `scaleX(${skill.stats.robustness / 100})` }}
                     />
                   </div>
                 </div>
@@ -164,6 +172,6 @@ export const SkillsSection = () => {
 
       {/* Subtle bottom blur element */}
       <div className="absolute bottom-[-10%] left-[30%] w-[300px] h-[300px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
-    </section>
+    </motion.section>
   );
 };

@@ -14,6 +14,11 @@
   --color-secondary: hsl(var(--secondary));
   --color-secondary-foreground: hsl(var(--secondary-foreground));
 
+  /* Premium Google Font Stacks */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: "Outfit", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
   --animate-float: float 6s ease-in-out infinite;
   --animate-float-slow: float-slow 15s ease-in-out infinite;
   --animate-float-slow-reverse: float-slow-reverse 18s ease-in-out infinite;
@@ -180,6 +185,10 @@
     @apply bg-background text-foreground transition-colors duration-500 font-sans antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
 }
 
 @utility container {
@@ -273,4 +282,15 @@
   max-width: 100%;
   margin: 0 auto;
   padding: 0;
+}
+
+/* Global Prefers-Reduced-Motion Accessibility Query */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+  }
 }

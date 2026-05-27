@@ -14,6 +14,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 export const ContactSection = () => {
   const { toast } = useToast();
@@ -122,7 +123,14 @@ export const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="py-28 px-4 relative overflow-hidden bg-secondary/5 border-t border-border/40">
+    <motion.section
+      id="contact"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="py-28 px-4 relative overflow-hidden bg-secondary/5 border-t border-border/40"
+    >
       <div className="container mx-auto max-w-5xl relative z-10">
         
         {/* Asymmetrical headers */}
@@ -173,7 +181,7 @@ export const ContactSection = () => {
               </div>
             </div>
 
-            {/* Direct Core Telemetry Specs (Phone/Mail/Loc) */}
+            {/* Direct Core Telemetry Specs (Phone/Mail/Loc/Github/Linkedin) */}
             <div className="grid grid-cols-1 gap-4 font-mono text-[10px] border border-border/85 rounded-md p-5 bg-secondary/15">
               
               <div className="flex items-center gap-3.5 group">
@@ -196,6 +204,30 @@ export const ContactSection = () => {
                   <span className="text-[9px] text-muted-foreground uppercase block font-bold">NODE_TEL</span>
                   <a href="tel:+918688209206" className="text-foreground hover:text-primary transition-colors font-bold text-xs">
                     +91 8688209206
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3.5 group">
+                <div className="p-2.5 rounded bg-background border border-border/80 text-muted-foreground group-hover:text-primary transition-colors">
+                  <Github className="h-4 w-4" />
+                </div>
+                <div className="text-left">
+                  <span className="text-[9px] text-muted-foreground uppercase block font-bold">GITHUB_NODE</span>
+                  <a href="https://github.com/Yash913212" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors font-bold text-xs">
+                    github.com/Yash913212
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3.5 group">
+                <div className="p-2.5 rounded bg-background border border-border/80 text-muted-foreground group-hover:text-primary transition-colors">
+                  <Linkedin className="h-4 w-4" />
+                </div>
+                <div className="text-left">
+                  <span className="text-[9px] text-muted-foreground uppercase block font-bold">LINKEDIN_NODE</span>
+                  <a href="https://linkedin.com/in/yaswanth-amjuri" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors font-bold text-xs">
+                    linkedin.com/in/yaswanth-amjuri
                   </a>
                 </div>
               </div>

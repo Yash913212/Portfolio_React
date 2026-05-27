@@ -59,7 +59,7 @@ export const AboutSection = () => {
               <a href="#contact" className="cosmic-button text-xs sm:text-sm">
                 Get In Touch
               </a>
-              <a href="#" className="secondary-button text-xs sm:text-sm">
+              <a href="mailto:yaswanthamjuri@gmail.com?subject=Request%20for%20CV%20-%20Yaswanth%20Amjuri" className="secondary-button text-xs sm:text-sm">
                 Download CV
               </a>
             </div>

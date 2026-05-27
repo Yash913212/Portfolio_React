@@ -101,6 +101,7 @@ export const ProjectsSection = () => {
                   <img
                     src={project.image}
                     alt={project.title}
+                    loading="lazy"
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 opacity-80 group-hover:opacity-100"
                   />
                   <div className="absolute top-4 left-4 z-10 px-2.5 py-1 rounded-sm text-[9px] uppercase font-mono font-bold tracking-widest bg-background/80 text-foreground border border-border">
@@ -114,15 +115,17 @@ export const ProjectsSection = () => {
 
                   {/* Actions floated right bottom inside the image */}
                   <div className="absolute bottom-4 right-4 z-20 flex space-x-2">
-                    <a
-                      href={project.demoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 rounded bg-black/60 hover:bg-black/90 backdrop-blur text-white transition-colors border border-white/10"
-                      aria-label={`View Live Demo for ${project.title}`}
-                    >
-                      <ExternalLink size={14} />
-                    </a>
+                    {project.demoUrl !== "#" && (
+                      <a
+                        href={project.demoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 rounded bg-black/60 hover:bg-black/90 backdrop-blur text-white transition-colors border border-white/10"
+                        aria-label={`View Live Demo for ${project.title}`}
+                      >
+                        <ExternalLink size={14} />
+                      </a>
+                    )}
                     <a
                       href={project.githubUrl}
                       target="_blank"

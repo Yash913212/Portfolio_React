@@ -11,7 +11,7 @@ export const OrbitWidget = () => {
   ];
 
   return (
-    <div className="w-full max-w-[400px] h-[400px] flex items-center justify-center relative overflow-hidden select-none select-none z-10">
+    <div className="w-full max-w-[400px] h-[400px] flex items-center justify-center relative overflow-hidden select-none z-10">
       {/* SVG Viewport */}
       <svg
         className="w-full h-full text-foreground/20 dark:text-foreground/10"
