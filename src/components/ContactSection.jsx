@@ -1,15 +1,10 @@
 import {
-  Instagram,
   Linkedin,
   Mail,
   MapPin,
   Phone,
   Send,
-  Twitter,
-  Github,
-  Terminal,
-  ShieldCheck,
-  Cpu
+  Github
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
@@ -143,7 +138,7 @@ export const ContactSection = () => {
             Get In <span className="text-shimmer font-black">Touch</span>
           </h2>
           <p className="text-muted-foreground max-w-xl text-sm sm:text-base leading-relaxed text-center mx-auto">
-            Let's collaborate on building the future of the web. Reach out directly or send an instant message.
+            Let&apos;s collaborate on building the future of the web. Reach out directly or send an instant message.
           </p>
         </div>
 

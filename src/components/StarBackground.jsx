@@ -2,17 +2,46 @@ import { useEffect, useState } from "react";
 
 export const StarBackground = () => {
   const [scrollY, setScrollY] = useState(0);
+  const [isReducedMotion, setIsReducedMotion] = useState(false);
 
   useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const syncPreference = () => setIsReducedMotion(media.matches);
+
+    syncPreference();
+    media.addEventListener("change", syncPreference);
+
+    return () => {
+      media.removeEventListener("change", syncPreference);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isReducedMotion) {
+      setScrollY(0);
+      return;
+    }
+
+    let rafId = 0;
     const handleScroll = () => {
-      setScrollY(window.scrollY);
+      if (rafId) {
+        return;
+      }
+
+      rafId = window.requestAnimationFrame(() => {
+        setScrollY(window.scrollY);
+        rafId = 0;
+      });
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      if (rafId) {
+        window.cancelAnimationFrame(rafId);
+      }
     };
-  }, []);
+  }, [isReducedMotion]);
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 bg-background transition-colors duration-500">

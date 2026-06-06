@@ -28,7 +28,7 @@ export const AboutSection = () => {
                 With deep expertise in designing and engineering high-quality web products, I specialize in crafting accessible, responsive, and ultra-performant React applications.
               </p>
               <p>
-                I love turning intricate technical challenges into smooth, intuitive user experiences. Guided by Vercel's philosophy, I strive for visual excellence, speed, and seamless interactivity in every codebase.
+                I love turning intricate technical challenges into smooth, intuitive user experiences. Guided by Vercel&apos;s philosophy, I strive for visual excellence, speed, and seamless interactivity in every codebase.
               </p>
             </div>
 

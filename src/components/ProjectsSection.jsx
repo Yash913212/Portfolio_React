@@ -1,6 +1,6 @@
 import { ArrowRight, ExternalLink, Github, Layers, ShieldCheck, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
+import { motion } from "framer-motion";
 
 const projects = [
   {
@@ -62,17 +62,25 @@ const projects = [
 ];
 
 export const ProjectsSection = () => {
-  const [sectionRef, isVisible] = useIntersectionObserver({ threshold: 0.05 });
-
   return (
-    <section ref={sectionRef} id="projects" className="py-28 px-4 relative overflow-hidden border-b border-border/40">
+    <motion.section
+      id="projects"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-120px" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="py-28 px-4 relative overflow-hidden border-b border-border/40"
+    >
       <div className="container mx-auto max-w-5xl relative z-10">
         
         {/* Section Header */}
-        <div className={cn(
-          "text-center flex flex-col items-center justify-center space-y-4 mb-20 transition-all duration-1000 transform opacity-0 translate-y-8",
-          isVisible && "opacity-100 translate-y-0"
-        )}>
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-120px" }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="text-center flex flex-col items-center justify-center space-y-4 mb-20"
+        >
           <span className="text-[10px] font-mono tracking-widest text-primary uppercase font-bold flex items-center justify-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
             SYSTEM_INTEGRATIONS // CASE_STUDIES
@@ -83,20 +91,22 @@ export const ProjectsSection = () => {
           <p className="text-muted-foreground max-w-xl text-sm sm:text-base leading-relaxed text-center mx-auto">
             A showcase of production-ready distributed architectures mapped across real-world scaling, security bounds, and transaction safety.
           </p>
-        </div>
+        </motion.div>
 
         {/* Alternating Asymmetrical Projects Stack */}
         <div className="space-y-24">
           {projects.map((project, index) => {
             const isEven = index % 2 === 0;
             return (
-              <div
+              <motion.div
                 key={project.id}
                 className={cn(
-                  "grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch opacity-0 transition-all duration-700",
-                  isVisible && "animate-scale-pop"
+                  "grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch"
                 )}
-                style={{ animationDelay: isVisible ? `${index * 0.15}s` : "0s" }}
+                initial={{ opacity: 0, y: 32, scale: 0.985 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
               >
                 
                 {/* Image Showcase Container Column (Col-Span 7) */}
@@ -214,7 +224,7 @@ export const ProjectsSection = () => {
                   </div>
                 </div>
 
-              </div>
+              </motion.div>
             );
           })}
         </div>
@@ -235,6 +245,6 @@ export const ProjectsSection = () => {
 
       {/* Decorative center radial glow */}
       <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
-    </section>
+    </motion.section>
   );
 };
