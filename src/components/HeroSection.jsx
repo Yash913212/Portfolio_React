@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { ArrowDown, ChevronRight } from "lucide-react";
+import { ArrowDown, ChevronRight, MapPin } from "lucide-react";
 import { OrbitWidget } from "./OrbitWidget";
 import { personal } from "@/lib/config";
 
@@ -139,32 +139,17 @@ export const HeroSection = () => {
               </a>
             </div>
 
-            <div className="grid grid-cols-3 gap-4 sm:gap-6 border-t border-border/80 pt-6 w-full opacity-0 animate-fade-in-delay-4">
-              <div className="space-y-1 text-center lg:text-left">
-                <div className="text-[10px] font-mono tracking-widest text-muted-foreground uppercase">
-                  Commits
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 border-t border-border/80 pt-6 w-full opacity-0 animate-fade-in-delay-4">
+              <div className="flex items-center justify-center sm:justify-start gap-3 text-xs sm:text-sm text-muted-foreground/90 font-mono tracking-wide bg-background/50 backdrop-blur-md px-5 py-3 rounded-xl border border-border/60 hover:border-primary/40 transition-colors">
+                <div className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary/60 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
                 </div>
-                <div className="text-xl sm:text-3xl font-black">
-                  {telemetryActive ? <TelemetryCounter endValue="48290" suffix="+" /> : "0"}
-                </div>
+                <span>Available for 2026/2027 Opportunities</span>
               </div>
-
-              <div className="space-y-1 text-center lg:text-left">
-                <div className="text-[10px] font-mono tracking-widest text-muted-foreground uppercase">
-                  Experience
-                </div>
-                <div className="text-xl sm:text-3xl font-black">
-                  {telemetryActive ? <TelemetryCounter endValue="8" suffix="+ yrs" duration={1200} /> : "0"}
-                </div>
-              </div>
-
-              <div className="space-y-1 text-center lg:text-left">
-                <div className="text-[10px] font-mono tracking-widest text-muted-foreground uppercase">
-                  Projects
-                </div>
-                <div className="text-xl sm:text-3xl font-black">
-                  {telemetryActive ? <TelemetryCounter endValue="24" suffix="+" duration={1000} /> : "0"}
-                </div>
+              <div className="flex items-center justify-center sm:justify-start gap-3 text-xs sm:text-sm text-muted-foreground/90 font-mono tracking-wide bg-background/50 backdrop-blur-md px-5 py-3 rounded-xl border border-border/60 hover:border-primary/40 transition-colors">
+                <MapPin className="w-4 h-4 text-primary" />
+                <span>Andhra Pradesh, India</span>
               </div>
             </div>
           </div>
