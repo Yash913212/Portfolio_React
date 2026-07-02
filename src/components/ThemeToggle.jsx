@@ -32,7 +32,7 @@ export const ThemeToggle = () => {
     <button
       onClick={toggleTheme}
       className={cn(
-        "fixed bottom-6 right-6 z-50 p-3 rounded-full transition-all duration-300",
+        "fixed bottom-6 left-6 z-50 p-3 rounded-full transition-all duration-300",
         "border border-border bg-background/80 backdrop-blur-xl shadow-md",
         "hover:scale-110 active:scale-95 cursor-pointer text-foreground hover:bg-secondary"
       )}

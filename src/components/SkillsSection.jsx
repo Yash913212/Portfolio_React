@@ -1,29 +1,8 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Terminal, Cpu, PenTool, Database } from "lucide-react";
-import { motion } from "framer-motion";
-import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
-
-const skills = [
-  // Frontend
-  { name: "HTML/CSS", level: 85, category: "frontend", stats: { scale: 75, efficiency: 70, robustness: 72 } },
-  { name: "JavaScript", level: 70, category: "frontend", stats: { scale: 72, efficiency: 68, robustness: 70 } },
-  { name: "React.js", level: 70, category: "frontend", stats: { scale: 74, efficiency: 66, robustness: 70 } },
-  { name: "React Native", level: 62, category: "frontend", stats: { scale: 70, efficiency: 74, robustness: 72 } },
-  { name: "Tailwind CSS", level: 55, category: "frontend", stats: { scale: 78, efficiency: 72, robustness: 68 } },
-
-  // Backend
-  { name: "Node.js", level: 70, category: "backend", stats: { scale: 78, efficiency: 70, robustness: 74 } },
-  { name: "Express", level: 65, category: "backend", stats: { scale: 75, efficiency: 72, robustness: 68 } },
-  { name: "MongoDB", level: 70, category: "backend", stats: { scale: 82, efficiency: 75, robustness: 80 } },
-
-  // Tools
-  { name: "Git / GitHub", level: 90, category: "tools", stats: { scale: 96, efficiency: 90, robustness: 95 } },
-  { name: "Docker", level: 70, category: "tools", stats: { scale: 90, efficiency: 80, robustness: 88 } },
-  { name: "VS Code", level: 95, category: "tools", stats: { scale: 95, efficiency: 92, robustness: 94 } },
-];
-
-const categories = ["all", "frontend", "backend", "tools"];
+import { AnimatedSection } from "./AnimatedSection";
+import { skills, skillCategories } from "@/lib/config";
 
 const getCategoryIcon = (category) => {
   switch (category) {
@@ -40,25 +19,15 @@ const getCategoryIcon = (category) => {
 
 export const SkillsSection = () => {
   const [activeCategory, setActiveCategory] = useState("all");
-  const [sectionRef, isVisible] = useIntersectionObserver({ threshold: 0.05 });
 
   const filteredSkills = skills.filter(
     (skill) => activeCategory === "all" || skill.category === activeCategory
   );
 
   return (
-    <motion.section
-      ref={sectionRef}
-      id="skills"
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      className="py-28 px-4 relative overflow-hidden bg-secondary/10 border-y border-border/40"
-    >
+    <AnimatedSection id="skills" className="py-28 px-4 relative overflow-hidden bg-secondary/10 border-y border-border/40">
       <div className="container mx-auto max-w-5xl relative z-10">
 
-        {/* Centered title layout */}
         <div className="flex flex-col items-center gap-6 mb-16 text-center">
           <div className="space-y-4 max-w-xl mx-auto flex flex-col items-center">
             <span className="text-[10px] font-mono tracking-widest text-primary uppercase font-bold flex items-center gap-1.5 justify-center">
@@ -73,9 +42,8 @@ export const SkillsSection = () => {
             </p>
           </div>
 
-          {/* Categories Tab selectors */}
           <div className="flex flex-wrap gap-1.5 border border-border/80 bg-background/50 backdrop-blur-md p-1 rounded-md justify-center">
-            {categories.map((category, key) => (
+            {skillCategories.map((category, key) => (
               <button
                 key={key}
                 onClick={() => setActiveCategory(category)}
@@ -92,20 +60,18 @@ export const SkillsSection = () => {
           </div>
         </div>
 
-        {/* Technical Competency Matrix Dashboard Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {filteredSkills.map((skill, key) => (
             <div
               key={key}
               className={cn(
                 "glass-card p-6 sm:p-8 rounded-md border border-border/85 hover:border-primary/40 transition-all duration-300 flex flex-col justify-between opacity-0 group text-center relative overflow-hidden",
-                isVisible && "animate-fade-in"
+                "animate-fade-in"
               )}
-              style={{ animationDelay: isVisible ? `${key * 0.05}s` : "0s" }}
+              style={{ animationDelay: `${key * 0.05}s` }}
             >
               <div className="absolute top-0 right-0 w-24 h-24 bg-foreground/2.5 rounded-bl-full pointer-events-none group-hover:scale-110 transition-transform" />
 
-              {/* Header: Competency name & Icon */}
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-border/60 pb-4 mb-4 text-center sm:text-left">
                 <div className="flex flex-col sm:flex-row items-center gap-3">
                   <div className="p-2.5 rounded bg-secondary border border-border/80 text-muted-foreground group-hover:text-primary transition-colors">
@@ -125,49 +91,18 @@ export const SkillsSection = () => {
                 </span>
               </div>
 
-              {/* Advanced Technical Odometer Metrics */}
               <div className="space-y-3 font-mono text-[10px] tracking-tight">
 
-                {/* Metric 1: Scale Factor */}
-                <div className="space-y-1">
-                  <div className="flex justify-between items-center text-muted-foreground">
-                    <span>CONCURRENCY SCALE</span>
-                    <span className="font-bold text-foreground">{skill.stats.scale}%</span>
-                  </div>
-                  <div className="flex gap-0.5 w-full bg-secondary h-1 rounded overflow-hidden">
-                    <div
-                      className="bg-foreground/80 group-hover:bg-primary h-full transition-[transform,background-color] duration-1000 ease-out origin-left w-full"
-                      style={{ transform: `scaleX(${skill.stats.scale / 100})` }}
-                    />
-                  </div>
-                </div>
-
-                {/* Metric 2: Efficiency */}
-                <div className="space-y-1">
-                  <div className="flex justify-between items-center text-muted-foreground">
-                    <span>COMPUTE EFFICIENCY</span>
-                    <span className="font-bold text-foreground">{skill.stats.efficiency}%</span>
-                  </div>
-                  <div className="flex gap-0.5 w-full bg-secondary h-1 rounded overflow-hidden">
-                    <div
-                      className="bg-foreground/80 group-hover:bg-primary h-full transition-[transform,background-color] duration-1000 ease-out origin-left w-full"
-                      style={{ transform: `scaleX(${skill.stats.efficiency / 100})` }}
-                    />
-                  </div>
-                </div>
-
-                {/* Metric 3: Robustness */}
-                <div className="space-y-1">
-                  <div className="flex justify-between items-center text-muted-foreground">
-                    <span>FAULT-TOLERANCE RATE</span>
-                    <span className="font-bold text-foreground">{skill.stats.robustness}%</span>
-                  </div>
-                  <div className="flex gap-0.5 w-full bg-secondary h-1 rounded overflow-hidden">
-                    <div
-                      className="bg-foreground/80 group-hover:bg-primary h-full transition-[transform,background-color] duration-1000 ease-out origin-left w-full"
-                      style={{ transform: `scaleX(${skill.stats.robustness / 100})` }}
-                    />
-                  </div>
+                <div className="flex flex-wrap gap-2 pt-2 justify-center sm:justify-start">
+                  <span className="px-2 py-1 bg-primary/10 text-primary border border-primary/20 rounded-md text-[10px] font-bold">
+                    {skill.stats.metric1}
+                  </span>
+                  <span className="px-2 py-1 bg-primary/10 text-primary border border-primary/20 rounded-md text-[10px] font-bold">
+                    {skill.stats.metric2}
+                  </span>
+                  <span className="px-2 py-1 bg-primary/10 text-primary border border-primary/20 rounded-md text-[10px] font-bold">
+                    {skill.stats.metric3}
+                  </span>
                 </div>
 
               </div>
@@ -176,8 +111,7 @@ export const SkillsSection = () => {
         </div>
       </div>
 
-      {/* Subtle bottom blur element */}
       <div className="absolute bottom-[-10%] left-[30%] w-[300px] h-[300px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
-    </motion.section>
+    </AnimatedSection>
   );
 };

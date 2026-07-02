@@ -1,14 +1,14 @@
 import { Briefcase, Code, User, ChevronRight } from "lucide-react";
+import { personal } from "@/lib/config";
+import { AnimatedSection } from "./AnimatedSection";
 
 export const AboutSection = () => {
   return (
-    <section id="about" className="py-28 px-4 relative overflow-hidden border-b border-border/40">
+    <AnimatedSection id="about" className="py-28 px-4 relative overflow-hidden border-b border-border/40">
       <div className="container mx-auto max-w-5xl relative z-10">
         
-        {/* Asymmetrical 12-column layout grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           
-          {/* Sticky Left Command Panel (Dossier Specs) */}
           <div className="lg:col-span-5 lg:sticky lg:top-28 space-y-8 text-center flex flex-col items-center justify-center">
             <div className="space-y-4">
               <span className="text-[10px] font-mono tracking-widest text-primary uppercase font-bold flex items-center justify-center gap-1.5">
@@ -19,20 +19,16 @@ export const AboutSection = () => {
                 About <span className="text-shimmer font-black">Me</span>
               </h2>
               <h3 className="text-xl font-bold tracking-tight text-foreground/90 mx-auto max-w-sm">
-                Passionate Web Architect & Creative Developer
+                {personal.tagline}
               </h3>
             </div>
 
             <div className="space-y-4 text-sm text-muted-foreground leading-relaxed mx-auto max-w-sm">
-              <p>
-                With deep expertise in designing and engineering high-quality web products, I specialize in crafting accessible, responsive, and ultra-performant React applications.
-              </p>
-              <p>
-                I love turning intricate technical challenges into smooth, intuitive user experiences. Guided by Vercel&apos;s philosophy, I strive for visual excellence, speed, and seamless interactivity in every codebase.
-              </p>
+              {personal.description.map((paragraph, i) => (
+                <p key={i}>{paragraph}</p>
+              ))}
             </div>
 
-            {/* Architectural Telemetry stats grid */}
             <div className="border border-border/80 rounded-md bg-secondary/20 p-5 font-mono text-[11px] space-y-3.5 shadow-sm w-full max-w-sm mx-auto">
               <div className="text-[10px] text-muted-foreground uppercase tracking-widest border-b border-border/85 pb-2 font-bold text-center">
                 Telemetry Dossier
@@ -59,16 +55,14 @@ export const AboutSection = () => {
               <a href="#contact" className="cosmic-button text-xs sm:text-sm">
                 Get In Touch
               </a>
-              <a href="/cv.pdf" download="Yaswanth_Amjuri_CV.pdf" className="secondary-button text-xs sm:text-sm">
+              <a href={personal.cvPath} download={personal.cvFilename} className="secondary-button text-xs sm:text-sm">
                 Download CV
               </a>
             </div>
           </div>
 
-          {/* Right Column: Focus blueprints timeline */}
           <div className="lg:col-span-7 space-y-6">
             
-            {/* Blueprint Indicator Card 1 */}
             <div className="glass-card p-8 rounded-md border border-border/80 hover:border-primary/40 card-hover transition-all duration-300 group text-center relative overflow-hidden">
               <div className="absolute top-0 right-0 w-24 h-24 bg-primary/2.5 rounded-bl-full pointer-events-none group-hover:scale-110 transition-transform" />
               <div className="flex flex-col items-center gap-5">
@@ -94,7 +88,6 @@ export const AboutSection = () => {
               </div>
             </div>
 
-            {/* Blueprint Indicator Card 2 */}
             <div className="glass-card p-8 rounded-md border border-border/80 hover:border-primary/40 card-hover transition-all duration-300 group text-center relative overflow-hidden">
               <div className="absolute top-0 right-0 w-24 h-24 bg-primary/2.5 rounded-bl-full pointer-events-none group-hover:scale-110 transition-transform" />
               <div className="flex flex-col items-center gap-5">
@@ -120,7 +113,6 @@ export const AboutSection = () => {
               </div>
             </div>
 
-            {/* Blueprint Indicator Card 3 */}
             <div className="glass-card p-8 rounded-md border border-border/80 hover:border-primary/40 card-hover transition-all duration-300 group text-center relative overflow-hidden">
               <div className="absolute top-0 right-0 w-24 h-24 bg-primary/2.5 rounded-bl-full pointer-events-none group-hover:scale-110 transition-transform" />
               <div className="flex flex-col items-center gap-5">
@@ -151,6 +143,6 @@ export const AboutSection = () => {
         </div>
 
       </div>
-    </section>
+    </AnimatedSection>
   );
 };

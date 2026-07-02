@@ -1,28 +1,44 @@
 import { cn } from "@/lib/utils";
-import { Menu, X, Github, Code2 } from "lucide-react";
+import { Menu, X, Github, Code2, Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
+import { navItems, personal } from "@/lib/config";
 
-const navItems = [
-  { name: "Home", href: "#hero" },
-  { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
-  { name: "Contact", href: "#contact" },
-];
-
-export const Navbar = () => {
+export const Navbar = ({ activeSection }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("theme");
+    if (storedTheme === "dark") {
+      setIsDarkMode(true);
+      document.documentElement.classList.add("dark");
+    } else {
+      localStorage.setItem("theme", "light");
+      setIsDarkMode(false);
+    }
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
-      // Fix: Use pageYOffset or scrollY instead of screenY
       setIsScrolled(window.scrollY > 20);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const toggleTheme = () => {
+    if (isDarkMode) {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+      setIsDarkMode(false);
+    } else {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+      setIsDarkMode(true);
+    }
+  };
 
   return (
     <nav
@@ -34,7 +50,6 @@ export const Navbar = () => {
       )}
     >
       <div className="container flex items-center justify-between">
-        {/* Senior Developer Logo Brand */}
         <a
           className="text-sm font-mono font-bold tracking-tight text-foreground flex items-center gap-2.5 group"
           href="#hero"
@@ -43,40 +58,66 @@ export const Navbar = () => {
             <Code2 className="w-4 h-4 text-primary transition-transform duration-300 group-hover:scale-110" />
           </div>
           <span className="tracking-widest uppercase text-xs font-black">
-            Yaswanth Amjuri <span className="text-primary/80 font-mono font-normal">// DEV</span>
+            {personal.name} <span className="text-primary/80 font-mono font-normal">// DEV</span>
           </span>
         </a>
 
-        {/* desktop nav */}
-        <div className="hidden md:flex items-center space-x-8">
-          {navItems.map((item, key) => (
-            <a
-              key={key}
-              href={item.href}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 relative py-1 group"
-            >
-              {item.name}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-foreground transition-all duration-300 group-hover:w-full" />
-            </a>
-          ))}
+        <div className="hidden md:flex items-center space-x-6">
+          {navItems.map((item) => {
+            const sectionId = item.href.replace("#", "");
+            const isActive = activeSection === sectionId;
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "text-sm font-medium transition-colors duration-200 relative py-1 group",
+                  isActive
+                    ? "text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                {item.name}
+                <span
+                  className={cn(
+                    "absolute bottom-0 left-0 h-0.5 bg-foreground transition-all duration-300",
+                    isActive ? "w-full" : "w-0 group-hover:w-full"
+                  )}
+                />
+              </a>
+            );
+          })}
+          <button
+            onClick={toggleTheme}
+            className="p-1.5 rounded-md hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground cursor-pointer"
+            aria-label="Toggle theme mode"
+          >
+            {isDarkMode ? <Sun size={16} className="text-yellow-500" /> : <Moon size={16} className="text-indigo-500" />}
+          </button>
           <a
-            href="https://github.com/Yash913212"
+            href={personal.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-1.5 rounded-md hover:bg-secondary transition-colors"
+            className="p-1.5 rounded-md hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground"
             aria-label="GitHub Profile"
           >
             <Github size={18} />
           </a>
         </div>
 
-        {/* mobile nav trigger */}
-        <div className="flex items-center gap-4 md:hidden">
+        <div className="flex items-center gap-3 md:hidden">
+          <button
+            onClick={toggleTheme}
+            className="p-1.5 rounded-md hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground cursor-pointer"
+            aria-label="Toggle theme mode"
+          >
+            {isDarkMode ? <Sun size={16} className="text-yellow-500" /> : <Moon size={16} className="text-indigo-500" />}
+          </button>
           <a
-            href="https://github.com/Yash913212"
+            href={personal.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-1.5 rounded-md hover:bg-secondary transition-colors"
+            className="p-1.5 rounded-md hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground"
             aria-label="GitHub Profile"
           >
             <Github size={18} />
@@ -86,11 +127,10 @@ export const Navbar = () => {
             className="p-2 text-foreground z-50 rounded-md hover:bg-secondary transition-colors"
             aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
           >
-            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}{" "}
+            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
 
-        {/* Mobile Fullscreen Menu */}
         <div
           className={cn(
             "fixed inset-0 bg-background/98 backdrop-blur-xl z-40 flex flex-col items-center justify-center",
@@ -101,16 +141,29 @@ export const Navbar = () => {
           )}
         >
           <div className="flex flex-col space-y-8 text-xl font-medium text-center">
-            {navItems.map((item, key) => (
-              <a
-                key={key}
-                href={item.href}
-                className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.name}
-              </a>
-            ))}
+            {navItems.map((item) => {
+              const sectionId = item.href.replace("#", "");
+              const isActive = activeSection === sectionId;
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "transition-colors duration-200",
+                    isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                  )}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </a>
+              );
+            })}
+            <button
+              onClick={() => { toggleTheme(); setIsMenuOpen(false); }}
+              className="text-muted-foreground hover:text-foreground transition-colors duration-200 cursor-pointer"
+            >
+              {isDarkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
+            </button>
           </div>
         </div>
       </div>

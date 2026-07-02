@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { personal, site } from "@/lib/config";
 
 const logLines = [
   "INITIALIZING YASWANTH_OS COMMAND INTERFACE...",
@@ -69,11 +70,11 @@ export const HUDPreloader = ({ onComplete }) => {
         <div className="flex items-center gap-3">
           <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
           <span className="font-bold uppercase tracking-wider text-emerald-400">
-            Yaswanth OS v2.0.33
+            {personal.name.split(" ")[0]} OS {site.preloaderOsVersion}
           </span>
         </div>
         <div className="text-[10px] sm:text-xs text-emerald-500/60 uppercase tracking-widest hidden sm:block">
-          LAT: 16.8688° N | LON: 81.2092° E
+          LAT: {site.preloaderLat} | LON: {site.preloaderLon}
         </div>
       </div>
 
@@ -124,7 +125,7 @@ export const HUDPreloader = ({ onComplete }) => {
       {/* HUD Footer */}
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 border-t border-emerald-500/20 pt-4 text-[10px] sm:text-xs text-emerald-500/50 uppercase tracking-widest">
         <div>STATUS: PENDING CONNECTION SECURE</div>
-        <div>&copy; 2026 YASWANTH PORTFOLIO INTERFACE</div>
+        <div>&copy; {new Date().getFullYear()} {personal.name.split(" ")[0].toUpperCase()} PORTFOLIO INTERFACE</div>
       </div>
     </div>
   );

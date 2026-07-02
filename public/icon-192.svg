@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <rect width="192" height="192" rx="32" fill="#0f0f0f"/>
+  <rect x="16" y="16" width="160" height="160" rx="24" fill="none" stroke="#7c3aed" stroke-width="2"/>
+  <text x="96" y="110" font-family="monospace" font-size="72" font-weight="bold" fill="#7c3aed" text-anchor="middle">&lt;/&gt;</text>
+  <text x="96" y="140" font-family="monospace" font-size="12" fill="#a1a1aa" text-anchor="middle">YA</text>
+</svg>

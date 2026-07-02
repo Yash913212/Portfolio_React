@@ -4,12 +4,14 @@ import {
   MapPin,
   Phone,
   Send,
-  Github
+  Github,
+  ArrowRight
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { personal } from "@/lib/config";
+import { AnimatedSection } from "./AnimatedSection";
 
 export const ContactSection = () => {
   const { toast } = useToast();
@@ -20,65 +22,37 @@ export const ContactSection = () => {
     message: "",
   });
 
-  const [terminalLogs, setTerminalLogs] = useState([
-    "SYS_PING: INITIALIZING CONTACT PROTOCOL [PORT_443]...",
-    "SECURE_LAYER: TLS_1.3 HANDSHAKE ACTIVE...",
-  ]);
-
-  const [activeConsoleInput, setActiveConsoleInput] = useState("NONE");
-
-  // Mock handshake sequence on component mount
-  useEffect(() => {
-    const logs = [
-      "CIPHER_SUITE::ECDHE-RSA-AES256-GCM-SHA384",
-      "ESTABLISHING CRYPTOGRAPHIC TUNNEL...",
-      "TUNNEL: ESTABLISHED [RTT: 42ms]",
-      "TRANSMISSION NODE READIED."
-    ];
-
-    logs.forEach((log, index) => {
-      setTimeout(() => {
-        setTerminalLogs((prev) => [...prev, log]);
-      }, (index + 1) * 800);
-    });
-  }, []);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
-
-    // Log keypress events to terminal console for supreme hacker aesthetic
-    const size = value.length;
-    setTerminalLogs((prev) => {
-      const filtered = prev.filter(line => !line.startsWith(`INPUT_EVENT::${name.toUpperCase()}`));
-      return [
-        ...filtered,
-        `INPUT_EVENT::${name.toUpperCase()}::[${size} BYTES_BUFFERED]`
-      ];
-    });
-  };
-
-  const handleFocus = (fieldName) => {
-    setActiveConsoleInput(fieldName.toUpperCase());
-    setTerminalLogs((prev) => [
-      ...prev,
-      `FOCUS_ACQUIRED::CHANNEL_NODE::${fieldName.toUpperCase()}`
-    ]);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTerminalLogs((prev) => [
-      ...prev,
-      "DISPATCH_REQUEST: SENDING FORM PAYLOAD TO FORMSPREE CORE..."
-    ]);
 
     try {
-      const response = await fetch("https://formspree.io/f/xqazvogy", {
+      const formspreeId = import.meta.env.VITE_FORMSPREE_ID;
+      
+      if (!formspreeId) {
+        const subject = encodeURIComponent(`Contact from Portfolio: ${formData.name}`);
+        const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`);
+        window.location.href = `mailto:${personal.email}?subject=${subject}&body=${body}`;
+        
+        toast({
+          title: "Redirecting...",
+          description: "Opening your default mail client to send the message.",
+        });
+        
+        setFormData({ name: "", email: "", message: "" });
+        setIsSubmitting(false);
+        return;
+      }
+
+      const response = await fetch(`https://formspree.io/f/${formspreeId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -96,10 +70,6 @@ export const ContactSection = () => {
           description: "Thank you for your message. I'll get back to you soon.",
         });
         setFormData({ name: "", email: "", message: "" });
-        setTerminalLogs((prev) => [
-          ...prev,
-          "DISPATCH_STATUS: 200 OK. TRANSMISSION SUCCESSFUL."
-        ]);
       } else {
         throw new Error("Failed to send");
       }
@@ -108,152 +78,115 @@ export const ContactSection = () => {
         title: "Error sending message",
         description: "Please try again or contact me directly via email.",
       });
-      setTerminalLogs((prev) => [
-        ...prev,
-        "DISPATCH_STATUS: 500 SERVER_ERROR. DEVIATED PATH ACTIVE."
-      ]);
       console.error("Email error:", error);
     }
     setIsSubmitting(false);
   };
 
+  const socialLinks = [
+    { name: "GitHub", icon: Github, url: personal.github },
+    { name: "LinkedIn", icon: Linkedin, url: personal.linkedin },
+  ];
+
   return (
-    <motion.section
-      id="contact"
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      className="py-28 px-4 relative overflow-hidden bg-secondary/5 border-t border-border/40"
-    >
-      <div className="container mx-auto max-w-5xl relative z-10">
+    <AnimatedSection id="contact" className="py-24 px-4 relative overflow-hidden bg-secondary/10 border-t border-border/40">
+      <div className="container mx-auto max-w-6xl relative z-10">
         
-        {/* Centered headers */}
-        <div className="text-center flex flex-col items-center justify-center space-y-4 mb-16">
-          <span className="text-[10px] font-mono tracking-widest text-primary uppercase font-bold flex items-center justify-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-            COMMUNICATION_CHANNELS // COMMAND_PING
+        <div className="flex flex-col items-center justify-center space-y-4 mb-16 sm:mb-24 text-center">
+          <span className="text-xs font-mono tracking-widest text-primary uppercase font-bold px-3 py-1 bg-primary/10 rounded-full border border-primary/20">
+            Get In Touch
           </span>
-          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tighter leading-none text-center">
-            Get In <span className="text-shimmer font-black">Touch</span>
+          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tighter leading-tight">
+            Let&apos;s Build <span className="text-shimmer font-black">Together</span>
           </h2>
-          <p className="text-muted-foreground max-w-xl text-sm sm:text-base leading-relaxed text-center mx-auto">
-            Let&apos;s collaborate on building the future of the web. Reach out directly or send an instant message.
+          <p className="text-muted-foreground max-w-2xl text-base sm:text-lg leading-relaxed">
+            Ready to bring your ideas to life? Whether you have a project in mind or just want to chat about web architecture, my inbox is always open.
           </p>
         </div>
 
-        {/* Technical 50/50 dashboard grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           
-          {/* Left Column: Handshake Cryptographic Terminal Console */}
-          <div className="md:col-span-5 flex flex-col justify-between space-y-6">
+          {/* Left Column: Contact Info */}
+          <div className="flex flex-col space-y-8 lg:pr-8 relative">
+            <div className="absolute top-[-20%] left-[-10%] w-[300px] h-[300px] rounded-full bg-primary/10 blur-[100px] pointer-events-none" />
             
-            {/* Terminal Body */}
-            <div className="flex-grow flex flex-col justify-between bg-black border border-emerald-500/20 rounded-md p-6 font-mono text-[10px] sm:text-xs text-emerald-500 space-y-4 text-left min-h-[300px] shadow-md">
-              <div className="space-y-3">
-                <div className="text-[9px] text-emerald-500/40 uppercase tracking-widest border-b border-emerald-500/10 pb-2 mb-2 font-bold flex justify-between">
-                  <span>SECURE_NODE_TERMINAL [SSL//TLS]</span>
-                  <span className="animate-pulse text-emerald-400">● LIVE</span>
-                </div>
-                
-                {terminalLogs.map((log, index) => (
-                  <div key={index} className="flex items-start gap-1.5 leading-relaxed font-semibold">
-                    <span className="text-emerald-500/30">&gt;</span>
-                    <span>{log}</span>
-                  </div>
-                ))}
-                
-                <div className="flex items-center gap-1">
-                  <span className="text-emerald-500/30">&gt;</span>
-                  <span className="w-1.5 h-4 bg-emerald-500 animate-[blink_1s_infinite]" />
-                </div>
-              </div>
-
-              {/* Console Status Summary Footer */}
-              <div className="border-t border-emerald-500/10 pt-3 text-[9px] text-emerald-500/40 uppercase tracking-widest flex justify-between">
-                <span>ACTIVE_FIELD: {activeConsoleInput}</span>
-                <span>TUNNEL_BUFF::OK</span>
-              </div>
+            <div className="space-y-6 relative z-10">
+              <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+                Contact Information
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Reach out to me directly via email or phone. I'm currently open for new opportunities and exciting freelance projects.
+              </p>
             </div>
 
-            {/* Direct Core Telemetry Specs (Phone/Mail/Loc/Github/Linkedin) */}
-            <div className="grid grid-cols-1 gap-4 font-mono text-[10px] border border-border/85 rounded-md p-5 bg-secondary/15 w-full">
-              
-              <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3.5 group">
-                <div className="p-2.5 rounded bg-background border border-border/80 text-muted-foreground group-hover:text-primary transition-colors">
-                  <Mail className="h-4 w-4" />
+            <div className="flex flex-col space-y-6 relative z-10">
+              <div className="flex items-start gap-4 group">
+                <div className="p-3 sm:p-4 rounded-xl bg-background border border-border/80 text-muted-foreground group-hover:text-primary transition-all duration-300 shadow-sm group-hover:shadow-primary/20">
+                  <Mail className="h-6 w-6" />
                 </div>
-                <div className="flex flex-col items-center sm:items-start">
-                  <span className="text-[9px] text-muted-foreground uppercase block font-bold">EMAIL_TARGET</span>
-                  <a href="mailto:yaswanthamjuri@gmail.com" className="text-foreground hover:text-primary transition-colors font-bold text-xs">
-                    yaswanthamjuri@gmail.com
+                <div className="flex flex-col pt-1">
+                  <span className="text-xs text-muted-foreground font-mono font-medium tracking-widest uppercase mb-1">Email</span>
+                  <a href={`mailto:${personal.email}`} className="text-foreground hover:text-primary transition-colors font-semibold text-sm sm:text-base">
+                    {personal.email}
                   </a>
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3.5 group">
-                <div className="p-2.5 rounded bg-background border border-border/80 text-muted-foreground group-hover:text-primary transition-colors">
-                  <Phone className="h-4 w-4" />
+              <div className="flex items-start gap-4 group">
+                <div className="p-3 sm:p-4 rounded-xl bg-background border border-border/80 text-muted-foreground group-hover:text-primary transition-all duration-300 shadow-sm group-hover:shadow-primary/20">
+                  <Phone className="h-6 w-6" />
                 </div>
-                <div className="flex flex-col items-center sm:items-start">
-                  <span className="text-[9px] text-muted-foreground uppercase block font-bold">NODE_TEL</span>
-                  <a href="tel:+918688209206" className="text-foreground hover:text-primary transition-colors font-bold text-xs">
-                    +91 8688209206
+                <div className="flex flex-col pt-1">
+                  <span className="text-xs text-muted-foreground font-mono font-medium tracking-widest uppercase mb-1">Phone</span>
+                  <a href={`tel:${personal.phone}`} className="text-foreground hover:text-primary transition-colors font-semibold text-sm sm:text-base">
+                    {personal.phone}
                   </a>
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3.5 group">
-                <div className="p-2.5 rounded bg-background border border-border/80 text-muted-foreground group-hover:text-primary transition-colors">
-                  <Github className="h-4 w-4" />
+              <div className="flex items-start gap-4 group">
+                <div className="p-3 sm:p-4 rounded-xl bg-background border border-border/80 text-muted-foreground group-hover:text-primary transition-all duration-300 shadow-sm group-hover:shadow-primary/20">
+                  <MapPin className="h-6 w-6" />
                 </div>
-                <div className="flex flex-col items-center sm:items-start">
-                  <span className="text-[9px] text-muted-foreground uppercase block font-bold">GITHUB_NODE</span>
-                  <a href="https://github.com/Yash913212" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors font-bold text-xs">
-                    github.com/Yash913212
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3.5 group">
-                <div className="p-2.5 rounded bg-background border border-border/80 text-muted-foreground group-hover:text-primary transition-colors">
-                  <Linkedin className="h-4 w-4" />
-                </div>
-                <div className="flex flex-col items-center sm:items-start">
-                  <span className="text-[9px] text-muted-foreground uppercase block font-bold">LINKEDIN_NODE</span>
-                  <a href="https://linkedin.com/in/yaswanth-amjuri" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors font-bold text-xs">
-                    linkedin.com/in/yaswanth-amjuri
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3.5 group">
-                <div className="p-2.5 rounded bg-background border border-border/80 text-muted-foreground group-hover:text-primary transition-colors">
-                  <MapPin className="h-4 w-4" />
-                </div>
-                <div className="flex flex-col items-center sm:items-start">
-                  <span className="text-[9px] text-muted-foreground uppercase block font-bold">LOCATION_COORD</span>
-                  <span className="text-foreground font-bold text-xs text-center sm:text-left">
-                    Andhra Pradesh, India
+                <div className="flex flex-col pt-1">
+                  <span className="text-xs text-muted-foreground font-mono font-medium tracking-widest uppercase mb-1">Location</span>
+                  <span className="text-foreground font-semibold text-sm sm:text-base">
+                    {personal.location}
                   </span>
                 </div>
               </div>
-
             </div>
 
+            <div className="pt-8 border-t border-border/60 relative z-10">
+              <span className="text-xs font-mono text-muted-foreground tracking-widest uppercase block mb-4">Connect on Socials</span>
+              <div className="flex items-center gap-4">
+                {socialLinks.map((social) => {
+                  const Icon = social.icon;
+                  return (
+                    <a
+                      key={social.name}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 rounded-full bg-background border border-border/80 text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
+                      aria-label={`Visit my ${social.name}`}
+                    >
+                      <Icon className="h-5 w-5" />
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
-          {/* Right Column: High-Tech minimalist Form Input */}
-          <div className="md:col-span-7 glass-card p-8 rounded-md border border-border/80 flex flex-col justify-center">
+          {/* Right Column: Contact Form */}
+          <div className="glass-card p-6 sm:p-10 rounded-2xl border border-border/80 shadow-xl relative w-full overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-[100px] pointer-events-none" />
             
-            <form className="space-y-6 text-left" onSubmit={handleSubmit}>
-              
-              <div className="space-y-1">
-                <label
-                  htmlFor="name"
-                  className="block text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground"
-                >
-                  Your Name
+            <form className="space-y-6 relative z-10 text-left" onSubmit={handleSubmit}>
+              <div className="space-y-2">
+                <label htmlFor="name" className="text-sm font-medium text-foreground">
+                  Full Name
                 </label>
                 <input
                   type="text"
@@ -261,19 +194,15 @@ export const ContactSection = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  onFocus={() => handleFocus("name")}
                   required
-                  className="w-full px-4 py-3 rounded-md border border-border/80 bg-background/50 backdrop-blur-md text-sm text-foreground placeholder:text-muted-foreground/40 focus:outline-hidden focus:ring-1 focus:ring-primary focus:border-primary transition-all duration-300"
-                  placeholder="Enter name..."
+                  className="w-full px-4 py-3.5 rounded-lg border border-border bg-background/50 text-foreground placeholder:text-muted-foreground/50 focus:outline-hidden focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-300"
+                  placeholder="John Doe"
                 />
               </div>
 
-              <div className="space-y-1">
-                <label
-                  htmlFor="email"
-                  className="block text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground"
-                >
-                  Your Email
+              <div className="space-y-2">
+                <label htmlFor="email" className="text-sm font-medium text-foreground">
+                  Email Address
                 </label>
                 <input
                   type="email"
@@ -281,30 +210,25 @@ export const ContactSection = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  onFocus={() => handleFocus("email")}
                   required
-                  className="w-full px-4 py-3 rounded-md border border-border/80 bg-background/50 backdrop-blur-md text-sm text-foreground placeholder:text-muted-foreground/40 focus:outline-hidden focus:ring-1 focus:ring-primary focus:border-primary transition-all duration-300"
-                  placeholder="name@example.com"
+                  className="w-full px-4 py-3.5 rounded-lg border border-border bg-background/50 text-foreground placeholder:text-muted-foreground/50 focus:outline-hidden focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-300"
+                  placeholder="john@example.com"
                 />
               </div>
 
-              <div className="space-y-1">
-                <label
-                  htmlFor="message"
-                  className="block text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground"
-                >
+              <div className="space-y-2">
+                <label htmlFor="message" className="text-sm font-medium text-foreground">
                   Your Message
                 </label>
                 <textarea
                   id="message"
                   name="message"
-                  rows={4}
+                  rows={5}
                   value={formData.message}
                   onChange={handleChange}
-                  onFocus={() => handleFocus("message")}
                   required
-                  className="w-full px-4 py-3 rounded-md border border-border/80 bg-background/50 backdrop-blur-md text-sm text-foreground placeholder:text-muted-foreground/40 focus:outline-hidden focus:ring-1 focus:ring-primary focus:border-primary transition-all duration-300 resize-none"
-                  placeholder="Hello, I would like to collaborate..."
+                  className="w-full px-4 py-3.5 rounded-lg border border-border bg-background/50 text-foreground placeholder:text-muted-foreground/50 focus:outline-hidden focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-300 resize-none"
+                  placeholder="How can we help you?"
                 />
               </div>
 
@@ -312,11 +236,11 @@ export const ContactSection = () => {
                 type="submit"
                 disabled={isSubmitting}
                 className={cn(
-                  "cosmic-button w-full flex items-center justify-center gap-2 cursor-pointer text-xs sm:text-sm font-bold uppercase tracking-wider pt-3 pb-3"
+                  "w-full flex items-center justify-center gap-2 px-6 py-4 rounded-lg bg-foreground text-background font-bold text-sm sm:text-base transition-all duration-300 hover:bg-foreground/90 hover:scale-[0.99] shadow-md border border-border group disabled:opacity-70 disabled:hover:scale-100"
                 )}
               >
-                {isSubmitting ? "SENDING PAYLOAD..." : "SEND TRANSMISSION"}
-                <Send size={15} />
+                {isSubmitting ? "Sending..." : "Send Message"}
+                <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
               </button>
             </form>
           </div>
@@ -324,8 +248,7 @@ export const ContactSection = () => {
         </div>
       </div>
 
-      {/* Decorative radial blur background */}
-      <div className="absolute bottom-[-15%] right-[-10%] w-[350px] h-[350px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
-    </motion.section>
+      <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full bg-primary/5 blur-[150px] pointer-events-none" />
+    </AnimatedSection>
   );
 };

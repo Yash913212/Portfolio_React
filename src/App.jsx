@@ -1,14 +1,14 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { Toaster } from "@/components/ui/toaster";
 
-// Route Code-Splitting
 const Home = lazy(() => import("./pages/Home").then(module => ({ default: module.Home })));
 const NotFound = lazy(() => import("./pages/NotFound").then(module => ({ default: module.NotFound })));
 
 function App() {
   return (
-    <>
+    <HelmetProvider>
       <Toaster />
       <BrowserRouter>
         <Suspense fallback={
@@ -24,7 +24,7 @@ function App() {
           </Routes>
         </Suspense>
       </BrowserRouter>
-    </>
+    </HelmetProvider>
   );
 }
 

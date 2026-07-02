@@ -1,86 +1,41 @@
 import { ArrowRight, ExternalLink, Github, Layers, ShieldCheck, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { projects, personal } from "@/lib/config";
+import { useState } from "react";
+import { AnimatedSection } from "./AnimatedSection";
 
-const projects = [
-  {
-    id: 1,
-    title: "Multi-tenant SaaS Platform",
-    description: "A comprehensive multi-tenant SaaS platform featuring tenant isolation, secure role-based access control, and scalable system architecture.",
-    image: "/projects/project1.webp",
-    tags: ["React.js", "Node.js", "MongoDB", "Auth0"],
-    demoUrl: "https://github.com/Yash913212/Multi-tenant-saas",
-    githubUrl: "https://github.com/Yash913212/Multi-tenant-saas",
-    metrics: {
-      load: "50,000 req/sec",
-      sla: "99.99%",
-      database: "PostgreSQL Isolation"
-    }
-  },
-  {
-    id: 2,
-    title: "Oryx Data Analytics Dashboard",
-    description: "A high-performance real-time data processing and analytics tool equipped with interactive dashboards and advanced D3 visualizations.",
-    image: "/projects/project2.webp",
-    tags: ["React", "TypeScript", "D3.js", "TailwindCSS"],
-    demoUrl: "https://github.com/Yash913212/Oryx",
-    githubUrl: "https://github.com/Yash913212/Oryx",
-    metrics: {
-      load: "1.2 GB/s streams",
-      sla: "99.95%",
-      database: "D3 Canvas Engine"
-    }
-  },
-  {
-    id: 3,
-    title: "Async Payment Gateway",
-    description: "A robust, PCI-compliant asynchronous payment gateway offering webhook streams, secure tokens, and detailed transaction logs.",
-    image: "/projects/project3.webp",
-    tags: ["Node.js", "Express", "Stripe API", "Redis"],
-    demoUrl: "https://github.com/Yash913212/Async-payment-gateway",
-    githubUrl: "https://github.com/Yash913212/Async-payment-gateway",
-    metrics: {
-      load: "Redis BullMQ Queue",
-      sla: "99.999%",
-      database: "Latency: <12ms"
-    }
-  },
-  {
-    id: 4,
-    title: "VitaNova Auth & Onboarding Core",
-    description: "A secure multi-account authentication, onboarding, and profile orchestration engine built with post-login setup redirection, robust theme synchronizations, and sleek micro-animations.",
-    image: "/projects/project4.webp",
-    tags: ["React", "Supabase Auth", "Zustand", "TailwindCSS"],
-    demoUrl: "https://vitanova-one.vercel.app/login",
-    githubUrl: "https://github.com/Yash913212/Vitanova",
-    metrics: {
-      load: "250,000+ Active Auth Events",
-      sla: "99.999% Session Resiliency",
-      database: "Post-Login Profile Flow"
-    }
-  },
-];
+const ProjectImage = ({ src, alt }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  return (
+    <div className="absolute inset-0">
+      <div
+        className={cn(
+          "absolute inset-0 bg-secondary/20 animate-pulse transition-opacity duration-500",
+          isLoaded ? "opacity-0" : "opacity-100"
+        )}
+      />
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        onLoad={() => setIsLoaded(true)}
+        className={cn(
+          "absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105",
+          isLoaded ? "opacity-80 group-hover:opacity-100 blur-0" : "opacity-0 blur-xl"
+        )}
+      />
+    </div>
+  );
+};
 
 export const ProjectsSection = () => {
   return (
-    <motion.section
-      id="projects"
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-120px" }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      className="py-28 px-4 relative overflow-hidden border-b border-border/40"
-    >
+    <AnimatedSection id="projects" className="py-28 px-4 relative overflow-hidden border-b border-border/40">
       <div className="container mx-auto max-w-5xl relative z-10">
         
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-120px" }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="text-center flex flex-col items-center justify-center space-y-4 mb-20"
-        >
+        <div className="text-center flex flex-col items-center justify-center space-y-4 mb-20">
           <span className="text-[10px] font-mono tracking-widest text-primary uppercase font-bold flex items-center justify-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
             SYSTEM_INTEGRATIONS // CASE_STUDIES
@@ -91,9 +46,8 @@ export const ProjectsSection = () => {
           <p className="text-muted-foreground max-w-xl text-sm sm:text-base leading-relaxed text-center mx-auto">
             A showcase of production-ready distributed architectures mapped across real-world scaling, security bounds, and transaction safety.
           </p>
-        </motion.div>
+        </div>
 
-        {/* Alternating Asymmetrical Projects Stack */}
         <div className="space-y-24">
           {projects.map((project, index) => {
             const isEven = index % 2 === 0;
@@ -103,43 +57,35 @@ export const ProjectsSection = () => {
                 className={cn(
                   "grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch"
                 )}
-                initial={{ opacity: 0, y: 32, scale: 0.985 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+                transition={{ duration: 0.6, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
               >
                 
-                {/* Image Showcase Container Column (Col-Span 7) */}
                 <div
                   className={cn(
                     "lg:col-span-7 group glass-card rounded-md overflow-hidden border border-border/80 flex flex-col justify-between relative min-h-[300px]",
                     isEven ? "lg:order-1" : "lg:order-2"
                   )}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10 pointer-events-none" />
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    loading="lazy"
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 opacity-80 group-hover:opacity-100"
-                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent z-10 pointer-events-none" />
+                  <ProjectImage src={project.image} alt={project.title} />
                   <div className="absolute top-4 left-4 z-10 px-2.5 py-1 rounded-sm text-[9px] uppercase font-mono font-bold tracking-widest bg-background/80 text-foreground border border-border">
                     ACTIVE DEPLOYMENT
                   </div>
 
-                  {/* Tiny SVG trajectory decorative HUD in bottom left of image */}
-                  <div className="absolute bottom-4 left-4 z-10 font-mono text-[9px] text-white/50 tracking-wider">
+                  <div className="absolute bottom-4 left-4 z-10 font-mono text-[9px] text-foreground/50 tracking-wider">
                     SYS_PING: SUCCESS // LATENCY_TEST
                   </div>
 
-                  {/* Actions floated right bottom inside the image */}
                   <div className="absolute bottom-4 right-4 z-20 flex space-x-2">
                     {project.demoUrl !== "#" && (
                       <a
                         href={project.demoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2 rounded bg-black/60 hover:bg-black/90 backdrop-blur text-white transition-colors border border-white/10"
+                        className="p-2 rounded bg-background/60 hover:bg-background/90 backdrop-blur text-foreground transition-colors border border-border/50"
                         aria-label={`View Live Demo for ${project.title}`}
                       >
                         <ExternalLink size={14} />
@@ -149,7 +95,7 @@ export const ProjectsSection = () => {
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 rounded bg-black/60 hover:bg-black/90 backdrop-blur text-white transition-colors border border-white/10"
+                      className="p-2 rounded bg-background/60 hover:bg-background/90 backdrop-blur text-foreground transition-colors border border-border/50"
                       aria-label={`View GitHub Repository for ${project.title}`}
                     >
                       <Github size={14} />
@@ -157,7 +103,6 @@ export const ProjectsSection = () => {
                   </div>
                 </div>
 
-                {/* Case Study Details Column (Col-Span 5) */}
                 <div
                   className={cn(
                     "lg:col-span-5 flex flex-col justify-between items-center p-6 sm:p-8 rounded-md border border-border/80 bg-secondary/10 text-center w-full",
@@ -185,7 +130,6 @@ export const ProjectsSection = () => {
                       {project.description}
                     </p>
 
-                    {/* Hardened System Metrics Specification Table */}
                     <div className="border border-border/80 rounded-sm bg-background/50 p-4 font-mono text-[10px] space-y-2.5 w-full">
                       <div className="text-[9px] text-muted-foreground uppercase tracking-widest border-b border-border/80 pb-1.5 font-bold flex items-center justify-center gap-1.5 w-full">
                         <Layers size={10} className="text-primary" />
@@ -229,13 +173,12 @@ export const ProjectsSection = () => {
           })}
         </div>
 
-        {/* Global CTA */}
         <div className="text-center mt-24">
           <a
             className="cosmic-button w-fit flex items-center mx-auto gap-2 text-sm"
             target="_blank"
             rel="noopener noreferrer"
-            href="https://github.com/Yash913212"
+            href={personal.github}
           >
             Explore Complete Stack <Github size={16} />
           </a>
@@ -243,8 +186,7 @@ export const ProjectsSection = () => {
 
       </div>
 
-      {/* Decorative center radial glow */}
       <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
-    </motion.section>
+    </AnimatedSection>
   );
 };
